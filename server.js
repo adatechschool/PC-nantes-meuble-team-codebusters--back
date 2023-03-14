@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Kitten = require("./models/Kitten.js");
+const Furniture = require("./models/Furniture.js");
 const User = require("./models/User.js");
 
 mongoose
@@ -8,13 +8,7 @@ mongoose
   )
   .then((res) => {
     console.log("Mongoose connected");
-    const juliette = new User({
-      name : "Juliette",
-      email : "juliette@ada.com",
-      password : "clovis"
     })
-    juliette.save()
-  })
   .catch((err) => {
     console.error(err);
   });
