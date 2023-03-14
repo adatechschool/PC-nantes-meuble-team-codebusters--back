@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Furniture = require("./models/Furniture.js");
+const Category = require("./models/Category.js")
 const User = require("./models/User.js");
 var bodyParser = require('body-parser')
 
@@ -20,12 +21,16 @@ const app = express();
 const port = 3000;
 
 app.get("/Furnitures", async (req, res) => {
-  const request = req.query
-  if(request.availability == "true"){
-    const furnitures = await Furniture.find({availability:true})
-    res.json(furnitures)
+  const request = req.query;
+  if (request.availability == "true") {
+    const furnitures = await Furniture.find({ availability: true });
+    for (let i = 0; i < furnitures.length; i++) {
+      const category = await Category.findById(furnitures[i].category);
+      furnitures[i].category = category.name
     }
- });
+    res.json(furnitures);
+  }
+});
 
 
 app.listen(port, () => {

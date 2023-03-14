@@ -2,7 +2,7 @@ const mongoose = require ('mongoose')
 
 const furnitureSchema = new mongoose.Schema({
     date: Date,
-    category_id: Array,
+    category: Object,
     price: Number,
     photos: Array,
     description: Object,
