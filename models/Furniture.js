@@ -4,7 +4,7 @@ const furnitureSchema = new mongoose.Schema({
     date: Date,
     category_id: Array,
     price: Number,
-    photos: Object,
+    photos: Array,
     description: Object,
     availability: Boolean,
 });
