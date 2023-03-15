@@ -34,11 +34,15 @@ app.get("/furnitures", async (req, res) => {
 app.post("/furnitures", async (req, res) => {
   const request = req.body;
   const furniture = new Furniture(request);
+  if (request.date == null){
+    request.date = new Date()
+  }else if (request.price == null) {
+    res.send("Merci d'indiquer un prix")
+  } else if (request.price == NaN){
+    res.send("Merci d'indiquer un prix valide")
+  }
   await furniture.save();
-    if (furniture == null) {
-      res.json("error") 
-    }
-  res.json(furniture);
+  res.json(furniture); 
 });
 
 app.listen(port, () => {
