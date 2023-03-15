@@ -21,11 +21,18 @@ mongoose
     console.error(err);
   });
 
+// allow CORS from all
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "*");
+  next();
+});
+
 app.get("/furnitures", async (req, res) => {
   const request = req.query;
-  console.log(request)
+  console.log(request);
   if (request != null) {
-  res.json(await Furniture.find(request));
+    res.json(await Furniture.find(request));
   } else {
     res.json(await Furniture.find());
   }
@@ -37,6 +44,7 @@ app.post("/furnitures", async (req, res) => {
   await furniture.save();
   res.json(furniture);
 });
+
 
 app.get("/users", async (req, res) => {
   const request = req.query;
@@ -53,6 +61,7 @@ app.post("/users", async (req, res) => {
   await user.save();
   res.status(200).json(user);
 });
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
