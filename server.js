@@ -45,7 +45,23 @@ app.post("/furnitures", async (req, res) => {
   res.json(furniture);
 });
 
-// USER PART
+
+app.get("/users", async (req, res) => {
+  const request = req.query;
+  if (request != null) {
+  res.json(await User.find(request));
+  } else {
+    res.json(await User.find());
+  }
+});
+
+app.post("/users", async (req, res) => {
+  const request = req.body;
+  const user = new User(request);
+  await user.save();
+  res.status(200).json(user);
+});
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
