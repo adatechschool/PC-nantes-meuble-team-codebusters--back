@@ -38,6 +38,16 @@ app.post("/furnitures", async (req, res) => {
   res.json(furniture);
 });
 
+app.get("/users", async (req, res) => {
+  const request = req.query;
+  console.log(request)
+  if (request != null) {
+  res.json(await User.find(request));
+  } else {
+    res.json(await User.find());
+  }
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
