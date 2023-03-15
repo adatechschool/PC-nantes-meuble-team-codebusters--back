@@ -2,10 +2,11 @@ const mongoose = require ('mongoose')
 
 const furnitureSchema = new mongoose.Schema({
     date: Date,
-    category: Object,
+    category: String,
+    type: String,
     price: Number,
     photos: Array,
-    description: Object,
+    description: Array,
     availability: Boolean,
 });
 const Furniture = mongoose.model('Furniture', furnitureSchema);

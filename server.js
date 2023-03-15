@@ -1,9 +1,14 @@
 const mongoose = require("mongoose");
 const Furniture = require("./models/Furniture.js");
-const Category = require("./models/Category.js")
 const User = require("./models/User.js");
-var bodyParser = require('body-parser')
 
+var bodyParser = require("body-parser");
+const express = require("express");
+const app = express();
+const port = 3000;
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 mongoose
   .connect(
@@ -11,27 +16,27 @@ mongoose
   )
   .then((res) => {
     console.log("Mongoose connected");
-    })
+  })
   .catch((err) => {
     console.error(err);
   });
 
-const express = require("express");
-const app = express();
-const port = 3000;
-
-app.get("/Furnitures", async (req, res) => {
+app.get("/furnitures", async (req, res) => {
   const request = req.query;
-  if (request.availability == "true") {
-    const furnitures = await Furniture.find({ availability: true });
-    for (let i = 0; i < furnitures.length; i++) {
-      const category = await Category.findById(furnitures[i].category);
-      furnitures[i].category = category.name
-    }
-    res.json(furnitures);
+  console.log(request)
+  if (request != null) {
+  res.json(await Furniture.find(request));
+  } else {
+    res.json(await Furniture.find());
   }
 });
 
+app.post("/furnitures", async (req, res) => {
+  const request = req.body;
+  const furniture = new Furniture(request);
+  await furniture.save();
+  res.json(furniture);
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
