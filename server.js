@@ -35,6 +35,9 @@ app.post("/furnitures", async (req, res) => {
   const request = req.body;
   const furniture = new Furniture(request);
   await furniture.save();
+    if (furniture == null) {
+      res.json("error") 
+    }
   res.json(furniture);
 });
 
