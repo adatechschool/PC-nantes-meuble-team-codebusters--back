@@ -35,7 +35,7 @@ app.post("/furnitures", async (req, res) => {
   const request = req.body;
   const furniture = new Furniture(request);
   if (request.date == null){
-    request.date = new Date()
+    request.date = 25
   }else if (request.price == null) {
     res.send("Merci d'indiquer un prix")
   } else if (request.price == NaN){
