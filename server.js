@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const Furniture = require("./models/Furniture.js");
 // Imoprt file User.js with schema of Users
 const User = require("./models/User.js");
+const {auth, secret} = require("./middleware/auth.js")
+const jwt = require('jwt-simple');
 
 // Permet d'envoyer la requête dans le body 
 var bodyParser = require("body-parser");
@@ -36,7 +38,7 @@ app.use((req, res, next) => {
 });
 
 ////////////////// FURNITURES REQUESTS //////////////////////////
-app.get("/furnitures", async (req, res) => {
+app.get("/furnitures", auth, async (req, res) => {
   const request = req.query;
   console.log(request);
   if (request != null) {
@@ -87,7 +89,6 @@ app.post("/furnitures", async (req, res) => {
 });
 
  ///////////////// USER REQUESTS //////////////////////////
-
 app.get("/users", async (req, res) => {
   const request = req.query;
   if (request != null) {
@@ -120,6 +121,37 @@ app.post("/users", async (req, res) => {
   await user.save();
   res.status(200).json(user);
 });
+
+//login routes 
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid email or password' });
+    }
+
+    const isPasswordValid = user.password === password;
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: 'Invalid email or password' });
+    }
+    const context = {userId : user._id, email : user.email}
+    const token = jwt.encode(context, secret)
+    console.log(token)
+    res.json({ token });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.get('/test', auth, (req, res) => {
+  console.log(req.headers.context)
+  res.status(200).json({foo : 'bar'})
+})
 
 // Requête pour écouter le port et l'indiquer
 app.listen(port, () => {
