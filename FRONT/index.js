@@ -4,10 +4,10 @@ async function fetchUrl() {
         method: 'POST',
         body: JSON.stringify({
             date: null,
-            price: "Fra",
-            category: 'assise',
-            type: 'canapé 23',
-            description: 'test',
+            price: 122,
+            category: "assise",
+            type: "canapé",
+            description: null,
             availability: true,
             photos: ['test']
         }),
