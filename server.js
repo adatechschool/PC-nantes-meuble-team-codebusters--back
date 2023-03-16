@@ -1,24 +1,21 @@
-// Import mongoose library
+// Import libraries
 const mongoose = require("mongoose");
-// Import file Furniture.js with schema of Furnitures
 const Furniture = require("./models/Furniture.js");
-// Imoprt file User.js with schema of Users
 const User = require("./models/User.js");
 const {auth, secret} = require("./middleware/auth.js")
 const jwt = require('jwt-simple');
 
-// Permet d'envoyer la requête dans le body 
 var bodyParser = require("body-parser");
-// Import express library and start instance
+
 const express = require("express");
 const app = express();
 const port = 3000;
 // Convert bodyParser on json format 
 app.use(bodyParser.json());
-//  ???? 
+
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// create connexion with MongoDB
+// Create connexion with MongoDB
 mongoose
   .connect(
     "mongodb+srv://codebusters:MdpBidon@codebusters.b64gatj.mongodb.net/codeBuster?retryWrites=true&w=majority"
@@ -153,7 +150,7 @@ app.get('/test', auth, (req, res) => {
   res.status(200).json({foo : 'bar'})
 })
 
-// Requête pour écouter le port et l'indiquer
+// Démarrer le serveur et spécifier le port
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
