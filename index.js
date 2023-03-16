@@ -4,9 +4,9 @@ async function fetchUrl() {
         method: 'POST',
         body: JSON.stringify({
             date: null,
-            price: 350,
+            price: "Fra",
             category: 'assise',
-            type: 'canapé',
+            type: 'canapé 23',
             description: 'test',
             availability: true,
             photos: ['test']
