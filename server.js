@@ -45,7 +45,6 @@ app.post("/furnitures", async (req, res) => {
   res.json(furniture);
 });
 
-
 app.get("/users", async (req, res) => {
   const request = req.query;
   if (request != null) {
