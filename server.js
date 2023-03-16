@@ -89,6 +89,19 @@ app.get("/users", async (req, res) => {
 
 app.post("/users", async (req, res) => {
   const request = req.body;
+  if (request.name == null) {
+    res.status(400).send("Merci de remplir le nom");
+    return;
+  } if (request.email == null) {
+    res.status(400).send("Merci de remplir l'email");
+    return;
+  } if (request.password == null) {
+    res.status(400).send("Merci de remplir le password");
+    return;
+  }
+
+  // Rights mis en false par défaut 
+  request.rights = false; 
   const user = new User(request);
   await user.save();
   res.status(200).json(user);
