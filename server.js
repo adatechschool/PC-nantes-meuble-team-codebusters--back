@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const Furniture = require("./models/Furniture.js");
 // Imoprt file User.js with schema of Users
 const User = require("./models/User.js");
-const {auth, secret} = require("./middleware/auth.js")
+// const {auth, secret} = require("./middleware/auth.js")
 const jwt = require('jwt-simple');
 
 const userController = require("./controllers/userController.js")
@@ -15,10 +15,11 @@ var bodyParser = require("body-parser");
 // Import express library and start instance
 const express = require("express");
 const app = express();
+
 const port = 4000;
+
 // Convert bodyParser on json format 
 app.use(bodyParser.json());
-//  ???? 
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // create connexion with MongoDB
