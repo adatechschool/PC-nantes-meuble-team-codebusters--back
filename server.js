@@ -1,21 +1,24 @@
-// Import libraries
+// Import mongoose library
 const mongoose = require("mongoose");
+// Import file Furniture.js with schema of Furnitures
 const Furniture = require("./models/Furniture.js");
+// Imoprt file User.js with schema of Users
 const User = require("./models/User.js");
-const {auth, secret} = require("./middleware/auth.js")
+// const {auth, secret} = require("./middleware/auth.js")
 const jwt = require('jwt-simple');
 
+// Permet d'envoyer la requête dans le body 
 var bodyParser = require("body-parser");
-
+// Import express library and start instance
 const express = require("express");
 const app = express();
 const port = 3000;
+
 // Convert bodyParser on json format 
 app.use(bodyParser.json());
-
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// Create connexion with MongoDB
+// create connexion with MongoDB
 mongoose
   .connect(
     "mongodb+srv://codebusters:MdpBidon@codebusters.b64gatj.mongodb.net/codeBuster?retryWrites=true&w=majority"
@@ -35,7 +38,7 @@ app.use((req, res, next) => {
 });
 
 ////////////////// FURNITURES REQUESTS //////////////////////////
-app.get("/furnitures", auth, async (req, res) => {
+app.get("/furnitures", async (req, res) => {
   const request = req.query;
   console.log(request);
   if (request != null) {
@@ -95,62 +98,62 @@ app.get("/users", async (req, res) => {
   }
 });
 
-// Requête POST avec les conditions de non fonctionnement
-app.post("/users", async (req, res) => {
-  const request = req.body;
-  if (request.name == null) {
-    res.status(400).send("Merci de remplir le nom");
-    return;
-  }
-  if (request.email == null) {
-    res.status(400).send("Merci de remplir l'email");
-    return;
-  }
-  if (request.password == null) {
-    res.status(400).send("Merci de remplir le password");
-    return;
-  }
+// // Requête POST avec les conditions de non fonctionnement
+// app.post("/users", async (req, res) => {
+//   const request = req.body;
+//   if (request.name == null) {
+//     res.status(400).send("Merci de remplir le nom");
+//     return;
+//   }
+//   if (request.email == null) {
+//     res.status(400).send("Merci de remplir l'email");
+//     return;
+//   }
+//   if (request.password == null) {
+//     res.status(400).send("Merci de remplir le password");
+//     return;
+//   }
 
-  // Rights mis en false par défaut
-  request.rights = false;
+//   // Rights mis en false par défaut
+//   request.rights = false;
 
-  const user = new User(request);
-  await user.save();
-  res.status(200).json(user);
-});
+//   const user = new User(request);
+//   await user.save();
+//   res.status(200).json(user);
+// });
 
-//login routes 
-app.post('/login', async (req, res) => {
-  const { email, password } = req.body;
+// //login routes 
+// app.post('/login', async (req, res) => {
+//   const { email, password } = req.body;
 
-  try {
-    const user = await User.findOne({ email });
+//   try {
+//     const user = await User.findOne({ email });
 
-    if (!user) {
-      return res.status(401).json({ error: 'Invalid email or password' });
-    }
+//     if (!user) {
+//       return res.status(401).json({ error: 'Invalid email or password' });
+//     }
 
-    const isPasswordValid = user.password === password;
+//     const isPasswordValid = user.password === password;
 
-    if (!isPasswordValid) {
-      return res.status(401).json({ error: 'Invalid email or password' });
-    }
-    const context = {userId : user._id, email : user.email}
-    const token = jwt.encode(context, secret)
-    console.log(token)
-    res.json({ token });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
+//     if (!isPasswordValid) {
+//       return res.status(401).json({ error: 'Invalid email or password' });
+//     }
+//     const context = {userId : user._id, email : user.email}
+//     const token = jwt.encode(context, secret)
+//     console.log(token)
+//     res.json({ token });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// });
 
-app.get('/test', auth, (req, res) => {
-  console.log(req.headers.context)
-  res.status(200).json({foo : 'bar'})
-})
+// app.get('/test', auth, (req, res) => {
+//   console.log(req.headers.context)
+//   res.status(200).json({foo : 'bar'})
+// })
 
-// Démarrer le serveur et spécifier le port
+// Requête pour écouter le port et l'indiquer
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
