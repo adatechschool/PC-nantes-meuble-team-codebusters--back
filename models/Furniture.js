@@ -3,6 +3,7 @@ const mongoose = require ('mongoose')
 
 // Création d'un nouveau schéma Furnitures avec les paramètres associés et le type de chaque paramètre 
 const furnitureSchema = new mongoose.Schema({
+    userId : String,
     date: Date,
     category: String,
     type: String,
