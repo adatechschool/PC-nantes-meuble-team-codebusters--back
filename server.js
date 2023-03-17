@@ -15,7 +15,7 @@ var bodyParser = require("body-parser");
 // Import express library and start instance
 const express = require("express");
 const app = express();
-const port = 3000;
+const port = 4000;
 // Convert bodyParser on json format 
 app.use(bodyParser.json());
 //  ???? 
@@ -41,7 +41,7 @@ app.use((req, res, next) => {
 });
 
 ////////////////// FURNITURES REQUESTS //////////////////////////
-app.get("/furnitures", auth, furnitureController.findFurnitures);
+app.get("/furnitures", furnitureController.findFurnitures);
 
 app.get("/users/furnitures", auth, furnitureController.findUserFurnitures);
 
