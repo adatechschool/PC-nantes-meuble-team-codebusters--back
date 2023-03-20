@@ -44,15 +44,23 @@ app.use((req, res, next) => {
 ////////////////// FURNITURES REQUESTS //////////////////////////
 app.get("/furnitures", furnitureController.findFurnitures);
 
-app.get("/furniture/:id", furnitureController.findOneFurniture);
+// Récupérer les données d'un meuble via son id
+app.get("/furnitures/:id", furnitureController.findOneFurniture);
 
+// Récupérer les meubles posté par l'utilisateur connecté
 app.get("/users/furnitures", auth, furnitureController.findUserFurnitures);
 
 // Requête POST avec les conditions de non fonctionnement
 app.post("/furnitures", auth, furnitureController.createFurniture);
 
+// Supprimer un meuble d'un utilisateur connecté via son id
+app.delete("/users/furnitures/:id", auth, furnitureController.deleteFurniture)
+
  ///////////////// USER REQUESTS //////////////////////////
 app.get("/users", userController.getAllUsers);
+
+// On récupère l'id d'un utilisateur.
+app.get("/users/:id", userController.getOneUser);
 
 // Requête POST avec les conditions de non fonctionnement
 app.post("/users", userController.createUser);

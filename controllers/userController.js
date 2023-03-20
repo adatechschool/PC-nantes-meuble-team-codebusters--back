@@ -1,4 +1,7 @@
 const User = require("../models/User.js");
+const jwt = require('jwt-simple');
+const {auth, secret} = require("../middleware/auth.js")
+
 
 
 exports.getAllUsers = async (req, res) => {
@@ -9,6 +12,19 @@ exports.getAllUsers = async (req, res) => {
     res.json(await User.find());
   }
 };
+
+// On récupère les données d'un seul utilisateur grâce à son id.
+exports.getOneUser = async (req, res) => {
+  // Récupère le paramètre id de l'URL.
+  const idOneUser = req.params.id;
+    try{
+      // On compare l'id de l'url et celui de la BDD et si ok on affiche l'utilisateur;
+      const OneUser = await User.findById(idOneUser);
+      res.json(OneUser);
+    } catch(err) {
+      res.status(400).send("Ce profil n'existe pas.");
+    };
+}
 
 exports.loginUser = async (req, res) => {
     const { email, password } = req.body;

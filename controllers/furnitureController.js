@@ -1,4 +1,8 @@
 const Furniture = require("../models/Furniture.js");
+const {auth, secret} = require("../middleware/auth")
+const jwt = require('jwt-simple');
+const { db } = require("../models/Furniture.js");
+
 
 exports.findFurnitures = async (req, res) => {
     const request = req.query;
@@ -23,6 +27,7 @@ exports.findOneFurniture = async (req, res) => {
     };
 }
 
+// On récupère les meubles de l'utilisateur connecté.
 exports.findUserFurnitures = async (req, res) => {
     //concept = "destructuring"
     const {userId} = req.headers.context
@@ -31,6 +36,7 @@ exports.findUserFurnitures = async (req, res) => {
     
   }
 
+// Formulaire de création d'un nouveau meuble
 exports.createFurniture = async (req, res) => {
     const furnitureParams = req.body;
   
@@ -71,4 +77,17 @@ exports.createFurniture = async (req, res) => {
     const furniture = new Furniture(furnitureParams);
     await furniture.save();
     res.json(furniture);
+  }
+
+
+  // Suppression d'un meuble posté par l'utilisateur
+  exports.deleteFurniture = async (req, res) => {
+    const idFurniture = req.query;
+      try{
+        // On compare l'id de l'url et celui de la BDD et si ok on supprime le meuble;
+        const furniture = await Furniture.deleteOne(idFurniture);
+        res.json(furniture);
+      } catch(err) {
+        res.status(400).json({message: "La suppression n'a pas fonctionné"});
+      };
   }
