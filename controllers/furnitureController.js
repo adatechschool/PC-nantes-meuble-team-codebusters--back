@@ -10,6 +10,19 @@ exports.findFurnitures = async (req, res) => {
     }
   }
 
+// On récupère les données d'un seul meuble grâce à son id.
+exports.findOneFurniture = async (req, res) => {
+  // Récupère le paramètre id de l'URL.
+  const idFurniture = req.params.id;
+    try{
+      // On compare l'id de l'url et celui de la BDD et si ok on affiche le meuble;
+      const furniture = await Furniture.findById(idFurniture);
+      res.json(furniture);
+    } catch(err) {
+      res.status(400).send("Le meuble que vous recherchez n'existe pas.");
+    };
+}
+
 exports.findUserFurnitures = async (req, res) => {
     //concept = "destructuring"
     const {userId} = req.headers.context

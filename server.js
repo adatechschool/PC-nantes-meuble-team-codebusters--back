@@ -44,6 +44,8 @@ app.use((req, res, next) => {
 ////////////////// FURNITURES REQUESTS //////////////////////////
 app.get("/furnitures", furnitureController.findFurnitures);
 
+app.get("/furniture/:id", furnitureController.findOneFurniture);
+
 app.get("/users/furnitures", auth, furnitureController.findUserFurnitures);
 
 // Requête POST avec les conditions de non fonctionnement
