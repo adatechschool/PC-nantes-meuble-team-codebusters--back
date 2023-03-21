@@ -82,12 +82,27 @@ exports.createFurniture = async (req, res) => {
 
   // Suppression d'un meuble posté par l'utilisateur
   exports.deleteFurniture = async (req, res) => {
-    const idFurniture = req.query;
+    const idFurniture = req.params;
       try{
         // On compare l'id de l'url et celui de la BDD et si ok on supprime le meuble;
         const furniture = await Furniture.deleteOne(idFurniture);
         res.json(furniture);
       } catch(err) {
         res.status(400).json({message: "La suppression n'a pas fonctionné"});
+      };
+  }
+
+  // Modification d'un meuble posté par l'utilisateur
+  exports.updateFurniture = async (req, res) => {
+    const request = req.body;
+    console.log(request)
+    const idFurniture = req.params;
+    console.log(idFurniture)
+      try{
+        // On compare l'id de l'url et celui de la BDD et si ok on modifie le meuble;
+        const furniture = await Furniture.updateOne(idFurniture, request);
+        res.json(furniture);
+      } catch(err) {
+        res.status(400).json({message: "La modification n'a pas fonctionné"});
       };
   }
