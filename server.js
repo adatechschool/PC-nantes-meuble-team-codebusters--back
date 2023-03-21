@@ -41,6 +41,16 @@ app.use((req, res, next) => {
   next();
 });
 
+
+///////////////// ADMIN REQUESTS //////////////////////////
+
+// supprimer un meuble ajouter un ligne
+app.delete("/admin/:_id", furnitureController.adminDeleteFurniture);
+
+// midifier un meuble ajouter en ligne
+app.put("/admin/:_id", furnitureController.adminUpdateFurniture);
+
+
 ////////////////// FURNITURES REQUESTS //////////////////////////
 app.get("/furnitures", furnitureController.findFurnitures);
 
@@ -59,6 +69,7 @@ app.delete("/users/furnitures/:_id", auth, furnitureController.deleteFurniture);
 // Modifier un meuble d'un utillisateur connecté via son id
 
 app.put("/users/furnitures/:_id", auth, furnitureController.updateFurniture);
+
 
  ///////////////// USER REQUESTS //////////////////////////
 app.get("/users", userController.getAllUsers);

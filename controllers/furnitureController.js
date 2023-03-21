@@ -106,3 +106,34 @@ exports.createFurniture = async (req, res) => {
         res.status(400).json({message: "La modification n'a pas fonctionné"});
       };
   }
+
+
+
+
+
+  /////////////////// ADMINCONTROLLER ///////////////////////
+
+  // Suppression d'un meuble posté par un utilisateur
+  exports.adminDeleteFurniture = async (req, res) => {
+    const idFurniture = req.params;
+      try{
+        // On compare l'id de l'url et celui de la BDD et si ok on supprime le meuble;
+        const furniture = await Furniture.deleteOne(idFurniture);
+        res.json(furniture);
+      } catch(err) {
+        res.status(400).json({message: "La suppression n'a pas fonctionné"});
+      };
+  }
+
+  // Modification d'un meuble posté par un utilisateur
+  exports.adminUpdateFurniture = async (req, res) => {
+    const request = req.body;
+    const idFurniture = req.params;
+      try{
+        // On compare l'id de l'url et celui de la BDD et si ok on modifie le meuble;
+        const furniture = await Furniture.updateOne(idFurniture, request);
+        res.json(furniture);
+      } catch(err) {
+        res.status(400).json({message: "La modification n'a pas fonctionné"});
+      };
+  }
