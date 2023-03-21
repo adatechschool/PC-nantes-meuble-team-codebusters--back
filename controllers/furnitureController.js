@@ -17,8 +17,7 @@ exports.findFurnitures = async (req, res) => {
 // On récupère les données d'un seul meuble grâce à son id.
 exports.findOneFurniture = async (req, res) => {
   // Récupère le paramètre id de l'URL.
-  const idFurniture = req.params
-  console.log("help", idFurniture)
+  const idFurniture = req.params;
     try{
       // On compare l'id de l'url et celui de la BDD et si ok on affiche le meuble;
       const furniture = await Furniture.findById(idFurniture);
