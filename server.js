@@ -38,6 +38,11 @@ mongoose
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "*");
+  // allow cors for put
+  if (req.method === "OPTIONS") {
+    res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
+    return res.status(200).json({});
+  }
   next();
 });
 
@@ -64,11 +69,11 @@ app.get("/users/furnitures", auth, furnitureController.findUserFurnitures);
 app.post("/furnitures", auth, furnitureController.createFurniture);
 
 // Supprimer un meuble d'un utilisateur connecté via son id
-app.delete("/users/furnitures/:_id", auth, furnitureController.deleteFurniture);
+app.delete("/users/furnitures/:_id", furnitureController.deleteFurniture);
 
 // Modifier un meuble d'un utillisateur connecté via son id
 
-app.put("/users/furnitures/:_id", auth, furnitureController.updateFurniture);
+app.put("/users/furnitures/:_id", furnitureController.updateFurniture);
 
 
  ///////////////// USER REQUESTS //////////////////////////
