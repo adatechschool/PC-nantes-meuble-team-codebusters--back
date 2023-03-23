@@ -14,6 +14,18 @@ exports.findFurnitures = async (req, res) => {
     }
   }
 
+  // function qui recupere tout les meubles selon l'id recuperer dans le body (peut recevoir plusieurs id)
+exports.findFurnituresById = async (req, res) => {
+    const request = req.body;
+    console.log(request);
+    if (request != null) {
+      res.json(await Furniture.find(request));
+    } else {
+      res.json(await Furniture.find());
+    }
+  }
+
+
 // On récupère les données d'un seul meuble grâce à son id.
 exports.findOneFurniture = async (req, res) => {
   // Récupère le paramètre id de l'URL.

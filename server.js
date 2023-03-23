@@ -75,6 +75,7 @@ app.delete("/users/furnitures/:_id", furnitureController.deleteFurniture);
 
 app.put("/users/furnitures/:_id", furnitureController.updateFurniture);
 
+app.get("/furnituresId", furnitureController.findFurnituresById);
 
  ///////////////// USER REQUESTS //////////////////////////
 app.get("/users", userController.getAllUsers);
