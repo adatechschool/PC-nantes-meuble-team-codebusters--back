@@ -80,8 +80,8 @@ app.get("/furnituresId", furnitureController.findFurnituresById);
  ///////////////// USER REQUESTS //////////////////////////
 app.get("/users", userController.getAllUsers);
 
-// On récupère l'id d'un utilisateur.
-app.get("/users/:_id", userController.getOneUser);
+// // On récupère l'id d'un utilisateur.
+// app.get("/users/:_id", userController.getOneUser);
 
 // Requête POST avec les conditions de non fonctionnement
 app.post("/users", userController.createUser);
@@ -89,7 +89,10 @@ app.post("/users", userController.createUser);
 //login routes 
 app.post('/login', userController.loginUser);
 
+app.get("/users/auth", auth, userController.getAuthUserInfo);
+
 // Requête pour écouter le port et l'indiquer
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
+

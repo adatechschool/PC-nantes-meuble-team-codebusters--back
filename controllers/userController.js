@@ -53,6 +53,14 @@ exports.loginUser = async (req, res) => {
     }
   }
 
+exports.getAuthUserInfo = async(req, res)=> {
+  console.log("Here")
+  const {userId} = req.headers.context
+  const oneUser = await User.findById(userId);
+  console.log(oneUser)
+  res.json(oneUser);
+}
+
 exports.createUser = async (req, res) => {
     const request = req.body;
     if (request.name == null) {
