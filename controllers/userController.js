@@ -42,9 +42,11 @@ exports.loginUser = async (req, res) => {
         return res.status(401).json({ error: 'Invalid email or password' });
       }
       const context = {userId : user._id, email : user.email}
+      const rights = {rights : user.rights}
       const token = jwt.encode(context, secret)
-      console.log(token)
-      res.json({ token });
+      
+      res.json({ token, rights });
+      
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: 'Internal server error' });
